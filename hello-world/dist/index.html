@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Hello World!</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<body>
+  <h1 class="head">👋 Hello World!</h1>
+    <div class="page-wrapper">      
+        <main class="main-wrapper">
+            <section class="section">
+                <div class="container">
+                    <div class="heading_wrap">
+                        <h1 class="split-lines">DIAGRAMAR</h1>
+                        <h1 class="split-lines">Our Mission: Help our clients achieve their business goals, providing them with innovative digital communication services and solutions.</h1>
+                        <h1 class="split-lines">Our Vision: To be the agency chosen for providing a combination of a defined strategy and innovative digital and interactive communication solutions.</h1>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript" integrity="" crossorigin="anonymous"></script>
+    <!--[if lte IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+    <noscript>
+        <style>
+            @media only screen and (min-width: 992px) {
+                body {
+                    font-size: 1rem;
+                }
+            }
+        </style>
+    </noscript>
+
+    <script>
+        function setFontSize() {
+            let maxWidth = 1560;
+            let windowWidth = $(window).width();
+            if (windowWidth >= maxWidth || windowWidth < 992) {
+                $("body").removeAttr("style");
+            } else {
+                let fontSize = windowWidth / 100 / 16;
+                $("body").css("font-size", fontSize + "rem");
+            }
+        }
+        setFontSize();
+        window.addEventListener("resize", function () {
+            setFontSize();
+        });
+    </script>
+    <style>
+        .line {
+            position: relative;
+        }
+        .line-mask {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: black;
+            opacity: 0.65;
+            height: 100%;
+            width: 100%;
+            z-index: 2;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    <script>
+        let typeSplit;
+        // Split the text up
+        function runSplit() {
+            typeSplit = new SplitType(".split-lines", {
+                types: "lines, words",
+            });
+            $(".line").append("<div class='line-mask'></div>");
+            createAnimation();
+        }
+        runSplit();
+        // Update on window resize
+        let windowWidth = $(window).innerWidth();
+        window.addEventListener("resize", function () {
+            if (windowWidth !== $(window).innerWidth()) {
+                windowWidth = $(window).innerWidth();
+                typeSplit.revert();
+                runSplit();
+            }
+        });
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        function createAnimation() {
+            $(".line").each(function (index) {
+                let tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: $(this),
+                        // trigger element - viewport
+                        start: "top center",
+                        end: "bottom center",
+                        scrub: 1,
+                    },
+                });
+                tl.to($(this).find(".line-mask"), {
+                    width: "0%",
+                    duration: 1,
+                });
+            });
+        }
+    </script>
+</body>
+<!-- partial -->
+  
+</body>
+</html>
